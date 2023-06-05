@@ -194,11 +194,30 @@ public:
         delete[]uarterMark[counter[uarter - 1]];
         uarterMark[counter[uarter - 1]] = buf;
     }
-    bool showUarter(int uarter) {
+  bool showAllUarter(){
+  for(int i=0;i<4;i++){
+  cout<<"uarter "<<i<<endl;
+    showUarter(i,0);
+
+  }
+  
+  
+  
+  }
+    bool showUarter(int uarter,bool flag=1) {
         if (counter[uarter - 1] == 0) return 0;
-        cout << "index|mark" << endl;
+      if(flag!=0){
+      cout << "index|mark" << endl;
         for (int i = 0; i < counter[uarter-1]; i++) {
             cout<<i<<"    |" << uarterMark[uarter - 1][i] << endl;
+
+        }
+        cout << endl;
+      
+      }
+        
+        for (int i = 0; i < counter[uarter-1]; i++) {
+            cout<< uarterMark[uarter - 1][i]<<" ";
 
         }
         cout << endl;
@@ -228,14 +247,70 @@ public:
 };
 
 class Group {
-    char name[2];
+    string name;
     Student* students = nullptr;
+    int counterStudent=0;
 
 
-
+void addStudent(string nameStudent){
+  
+  
+  
+  }
+int searchStudent(string nameStudent){
+  for(int i=0;i<counterStudents;i++){
+    if(students[i].getName()==nameStudent)return i;
+    
+    }
+  
+  }
 
 
 };
+class Journal{
+  Group* groups=nullptr;
+  int counter=0;
+  
+   public:
+  void addGroup(string nameGroup){
+    int index=searchGroup(string nameGroup);
+    if(index!=-1){
+      Group* buf= new Group[counter+1];
+      for(int i=0;i<counter;i++){
+        buf[i]=groups[i];
+        
+        }
+      buf[counter++]=Group(nameGroup);
+      delete[] groups;
+      groups=buf;
+      
+      }
+    
+    }
+  int searchGroup(string nameGroup){
+    for (int i=0;i<counter;i++;){
+      if(nameGroup==groups[i]) return i;
+      }
+    return -1;
+    
+    }
+  void addStudent(string nameStudent,string nameGroup){
+    int index=searchGroup(nameGroup);
+    if (index!=-1){
+      groups[i].addStudent(nameStudent);
+      
+      
+      }
+      
+      
+
+    }
+  
+  
+  
+  
+  
+  };
 int main()
 {
     /* классный журнал
