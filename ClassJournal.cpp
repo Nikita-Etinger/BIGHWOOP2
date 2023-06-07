@@ -1,5 +1,4 @@
 ﻿
-
 #include <iostream>
 using namespace std;
 
@@ -207,7 +206,7 @@ public:
 
         }
     }
-    bool showUarter(int uarter, bool showIndex = 1) {
+    bool showUarter(int uarter, bool showIndex = 0) {
         if (counter[uarter - 1] == 0) return 0;
         if (showIndex != 0) {
             cout << "index|mark" << endl;
@@ -218,10 +217,10 @@ public:
             cout << endl;
         }
         else
-        for (int i = 0; i < counter[uarter - 1]; i++) {
-            cout << uarterMark[uarter - 1][i] << " ";
+            for (int i = 0; i < counter[uarter - 1]; i++) {
+                cout << uarterMark[uarter - 1][i] << " ";
 
-        }
+            }
         cout << endl;
         return 1;
     }
@@ -247,7 +246,9 @@ public:
     string getName() {
         return name;
     }
-
+    int getCounterUarter(int indexUarter) {
+        return counter[indexUarter];
+    }
 
 };
 
@@ -283,13 +284,26 @@ public:
             }
         }
         else for (int i = 0; i < counter; i++) {
-            cout  << name << endl;
+            cout << name << endl;
         }
     }
     int getCounter() {
         return counter;
     }
+    void showAllUartersMarks(int indexStudent,bool showIndex=0) {
+        students[indexStudent].showAllUarter();
+    }
+    void showUarterStudent(int indexStudent,int indexUarter int showIndex = 0) {
+        students[indexStudent]->showUarter(indexUarter, 1);
+
+    }
+    int getCounterUarter(int indexStudent, int indexUarter) {
+        return students[indexStunedt].getCounterUarter(indexUarter);
+    }
+
 };
+
+
 class Journal {
     Group* groups = nullptr;
     int counter = 0;
@@ -326,10 +340,10 @@ public:
         }
         return 0;
     }
-    void showAll(bool showIndex = 0) {
+    void showAllGroups(bool showIndex = 0) {
         if (showIndex) {
             for (int i = 0; i < counter; i++) {
-                cout <<groups[i].getName() << endl;
+                cout << groups[i].getName() << endl;
             }
         }
         else for (int i = 0; i < counter; i++) {
@@ -342,11 +356,25 @@ public:
     bool showStudentsInGroup(int indexGroup, bool showIndex = 0) {
         groups[indexGroup].showAll(showIndex);
     }
-    int getCounterGroup(int index){
+    int getCounterGroup(int index) {
         return groups[index].getCounter();
     }
+    void showAllUartersMarks(int indexGroup, int indexStudent,bool showIndex=0) {
+        groups[indexGroup].showAllUartersMarks(indexStudent);
+    }
+    void showAllMarksOneUarters(int indexGroup,int indexStudent) {
 
 
+
+
+    }
+    void showUarterMarksStudent(int indexGroup, int indexStudent, int indexUarter,int showIndex=0) {
+        groups[indexGroup].showUarterStudent(indexStudent, indexUarter,showIndex);
+
+    }
+    int getCounterMarks(int indexStudent, int indexGroup, int indexUarter) {
+        return groups[indexGroup].getCounterUarter(indexStudent, indexUarter);
+    }
 
 };
 
@@ -365,7 +393,7 @@ void showMainMenu(Journal& journal) {
 
         switch (choice) {
         case 1:
-            displayAllGroups(journal);
+            journal.showAllGroups();
             break;
         case 2:
             selectGroupMenu(journal);
@@ -383,13 +411,54 @@ void showMainMenu(Journal& journal) {
     }
 }
 
-// Функция для вывода всех групп
-void displayAllGroups(Journal& journal) {
-    journal.showAll();
-}
 
-// Функция для выбора группы
-void selectActionsStudentMenu(Journal& journal,int indexGroup,int indexStudent) {
+void selectActionsUarters(Journal& journal, int indexGroup,int indexStudent,int indexUarter) {
+    while (true) {
+        // Отображение меню действий со студентом
+        cout << "Меню действий c кварталом:" << endl;
+        cout << "1. Изменить оценку" << endl;
+        cout << "2. Добавить оценку" << endl;
+        cout << "3. Показать квартал" << endl;
+        cout << "0. Выход" << endl;
+        cout << "Введите номер пункта: ";
+        cin >> choice;
+
+        switch (choice) {
+        case 1:
+            journal.showUarterMarksStudent(int indexGroup, int indexStudent, int indexUarter)
+            break;
+        case 2:
+            int numMarks;
+            cout << "Введите номер оценки" << endl;
+            cin >> numMarks;
+            if (numMarks >= 1 && numMarks <= journal.getCounterMarks(indexStudent,indexGroup,indexGroup)) {
+                selectActionsLocaleMenu(journal, indexGroup, indexStudent);
+
+            }
+            else if (Uarter == 0) {
+                cout << "Выход из меню выбора квартала" << endl;
+                return;
+            }
+            else {
+                cout << "Некорректный номер квартала. Попробуйте снова." << endl;
+            }
+            break;
+        case 3:
+            journal.showUarterMarksStudent(int indexGroup, int indexStudent, int indexUarter);
+        case 0:
+            cout << "Выход из меню действий со студентом" << endl;
+            return;
+        default:
+            cout << "Некорректный выбор. Попробуйте снова." << endl;
+            break;
+        }
+    }
+
+
+
+}
+// Меню управлени студентом
+void selectActionsStudentMenu(Journal& journal, int indexGroup, int indexStudent) {
     int choice;
 
     while (true) {
@@ -403,17 +472,19 @@ void selectActionsStudentMenu(Journal& journal,int indexGroup,int indexStudent) 
 
         switch (choice) {
         case 1:
-            journal.showAllQuarters(indexGroup,indexStudent);
+            journal.showAllUartersMarks(indexGroup, indexStudent,0);
             break;
         case 2:
-            int quarter;
+            int uarter;
             cout << "Введите номер квартала (от 1 до 4): ";
-            cin >> quarter;
-            if (quarter >= 1 && quarter <= 4) {
-                // TODO: Обработка выбранного квартала
-                // Вместо комментария нужно добавить логику обработки выбранного квартала
+            cin >> uarter;
+            if (Uarter >= 1 && Uarter <= 4) {
+                selectActionsLocaleMenu(journal, indexGroup, indexStudent,uarter);
+
+
+
             }
-            else if (quarter == 0) {
+            else if (Uarter == 0) {
                 cout << "Выход из меню выбора квартала" << endl;
                 return;
             }
@@ -439,7 +510,7 @@ void selectGroupMenu(Journal& journal) {
         cout << "0. Выход" << endl;
 
         // Отображение списка групп
-        journal.showAll(true);
+        journal.showAllGroups(true);
 
         cout << "Введите номер группы: ";
         cin >> choice;
@@ -481,7 +552,7 @@ void selectStudentMenu(Journal& journal, int indexGroup) {
         else cout << "Студента с таким индексом не существует." << endl;
     }
 }
-void selectStudentsMenu(Journal& journal,int indexGroup) {
+void selectStudentsMenu(Journal& journal, int indexGroup) {
     int choice;
 
     while (true) {
@@ -551,12 +622,12 @@ void addGroupMenu(Journal& journal) {
     }
 }
 
-//int main() {
-//    Journal journal;
-//    showMainMenu(journal);
-//
-//    return 0;
-//}
+int main() {
+    Journal journal;
+    showMainMenu(journal);
+
+    return 0;
+}
 //
 //int main()
 //{
@@ -606,4 +677,3 @@ void addGroupMenu(Journal& journal) {
 //    //car1.showInfo();
 //
 //}
-
